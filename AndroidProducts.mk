@@ -15,9 +15,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_odessa.mk
+    $(LOCAL_DIR)/lineage_hanoip.mk
 
 COMMON_LUNCH_CHOICES := \
-    lineage_odessa-eng \
-    lineage_odessa-user \
-    lineage_odessa-userdebug
+    lineage_hanoip-eng \
+    lineage_hanoip-user \
+    lineage_hanoip-userdebug

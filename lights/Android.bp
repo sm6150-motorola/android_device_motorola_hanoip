@@ -14,10 +14,10 @@
 // limitations under the License.
 
 cc_binary {
-    name: "android.hardware.light@2.0-service.odessa",
+    name: "android.hardware.light@2.0-service.hanoip",
     defaults: ["hidl_defaults"],
-    init_rc: ["hidl/android.hardware.light@2.0-service.odessa.rc"],
-    vintf_fragments: ["hidl/android.hardware.light@2.0-service.odessa.xml"],
+    init_rc: ["hidl/android.hardware.light@2.0-service.hanoip.rc"],
+    vintf_fragments: ["hidl/android.hardware.light@2.0-service.hanoip.xml"],
     srcs: [
         "hidl/service.cpp",
         "hidl/Light.cpp",
@@ -34,10 +34,10 @@ cc_binary {
 }
 
 cc_binary {
-    name: "android.hardware.lights-service.odessa",
+    name: "android.hardware.lights-service.hanoip",
     relative_install_path: "hw",
-    init_rc: ["aidl/android.hardware.lights.odessa.rc"],
-    vintf_fragments: ["aidl/android.hardware.lights.odessa.xml"],
+    init_rc: ["aidl/android.hardware.lights.hanoip.rc"],
+    vintf_fragments: ["aidl/android.hardware.lights.hanoip.xml"],
     vendor: true,
     shared_libs: [
         "libbase",

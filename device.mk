@@ -21,7 +21,7 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 $(call inherit-product, device/motorola/sm6150-common/common.mk)
 
 # Get non-open-source specific aspects
-$(call inherit-product, vendor/motorola/odessa/odessa-vendor.mk)
+$(call inherit-product, vendor/motorola/hanoip/hanoip-vendor.mk)
 
 # Properties
 -include $(LOCAL_PATH)/properties.mk
@@ -55,7 +55,7 @@ PRODUCT_PACKAGES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.lights-service.odessa
+    android.hardware.lights-service.hanoip
 
 # NFC
 PRODUCT_PACKAGES += \

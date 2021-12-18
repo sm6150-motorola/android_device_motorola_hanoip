@@ -18,17 +18,17 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# Inherit from odessa device
-$(call inherit-product, device/motorola/odessa/device.mk)
+# Inherit from hanoip device
+$(call inherit-product, device/motorola/hanoip/device.mk)
 
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
 # Device identifier. This must come after all inclusions.
-PRODUCT_NAME := lineage_odessa
-PRODUCT_DEVICE := odessa
+PRODUCT_NAME := lineage_hanoip
+PRODUCT_DEVICE := hanoip
 PRODUCT_BRAND := motorola
-PRODUCT_MODEL := moto g(9) plus
+PRODUCT_MODEL := moto g(60)
 PRODUCT_MANUFACTURER := motorola
 
 PRODUCT_AAPT_CONFIG := xxxhdpi
@@ -39,9 +39,9 @@ TARGET_SCREEN_HEIGHT := 2400
 TARGET_SCREEN_WIDTH := 1080
 
 # Build info
-BUILD_FINGERPRINT := "motorola/odessa_retail/odessa:11/RPAS31.Q2-59-17-3/0a646:user/release-keys"
+BUILD_FINGERPRINT := "motorola/hanoip_retail/hanoip:11/RRI31.Q1-42-48/222fd:user/release-keys"
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRODUCT_NAME=odessa_retail \
-    PRIVATE_BUILD_DESC="odessa_retail-user 11 RPAS31.Q2-59-17-3 0a646 release-keys"
+    PRODUCT_NAME=hanoip_retail \
+    PRIVATE_BUILD_DESC="hanoip_retail-user 11 RRI31.Q1-42-48 222fd release-keys"
 
 PRODUCT_GMS_CLIENTID_BASE := android-motorola
