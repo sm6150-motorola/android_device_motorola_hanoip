@@ -6,13 +6,11 @@ service capsense_reset /system/vendor/bin/capsense_reset
    disabled
 
 on property:sys.boot_completed=1
+    start vendor.qrtr-lookup-sh
     start capsense_reset
 
 on early-init
-   exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules snd_smartpa_aw882xx nova_0flash_mmi.ko focaltech_0flash_mmi.ko abov_sar_mmi_overlay
-   insmod /vendor/lib/modules/bq2597x_mmi.ko
-   insmod /vendor/lib/modules/mmi_parallel_charger.ko
-   insmod /vendor/lib/modules/qpnp-power-on-mmi.ko
+   exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules snd_smartpa_aw882xx ilitek_v3_mmi.ko sx933x_sar
    insmod /vendor/lib/modules/qpnp_adaptive_charge.ko
 
 on init
@@ -21,29 +19,17 @@ on init
    # Change ownership for for ACL feature
    chown system system /sys/class/graphics/fb0/acl
 
-on post-fs
-    mount none /vendor/firmware_mnt/image/bdwlan_odessa_ipa.bin /vendor/firmware_mnt/image/bdwlan.bin bind
-
 on boot
    # change permission for capsensor
    chown system system /sys/class/capsense/reset
    chown system system /sys/class/capsense/int_state
-   chown system system /sys/class/capsense/headset
-   # Change ownership for capsensor
-   chown root input /sys/class/sensors/capsense_bottom/enable
-   chown root input /sys/class/sensors/capsense_bottom/poll_delay
-   chown root input /sys/class/sensors/capsense_top_left/enable
-   chown root input /sys/class/sensors/capsense_top_left/poll_delay
-   chown root input /sys/class/sensors/capsense_top_right/enable
-   chown root input /sys/class/sensors/capsense_top_right/poll_delay
 
-   # Change ownership for touch gesture
-   chown root input /sys/class/sensors/dt-gesture/enable
-   chown root input /sys/class/sensors/dt-gesture/poll_delay
+   # Change the ownership of display TE files for tcmds
+   chown root vendor_tcmd /sys/class/graphics/fb0/te_test
+   chown root vendor_tcmd /sys/class/graphics/fb0/te_enable
+   chown root vendor_tcmd /sys/class/graphics/fb0/frame_counter
+   mkdir /data/vendor/gf_data 0770 system system
 
-   # Change ownership for touch palm
-   chown root input /sys/class/sensors/palm-gesture/enable
-   chown root input /sys/class/sensors/palm-gesture/poll_delay
 
    # in FBE mode, /data is here
    write /sys/block/sdb/queue/read_ahead_kb 512
@@ -70,22 +56,24 @@ on boot
    chmod 0664 /sys/class/leds/led:torch_0/brightness
    chmod 0664 /sys/class/leds/led:switch_0/brightness
 
-   # Add for goodix fingerprint
-   chown system system /dev/goodix_fp
-   chmod 0664 /dev/goodix_fp
-   mkdir /data/vendor/gf_data 0770 system system
-   mkdir /mnt/vendor/persist/goodix 0770 system system
-   chown system system /d/dsi_smd_639_1080x2340_cmd_display/panel_hbm
-   chown system system /d/dsi_tianma_639_1080x2340_cmd_display/panel_hbm
-   chown system system /sys/class/backlight/panel0-backlight/brightness
 
+   # Change ownership and permission for AMPS factory testing
+   chown root vendor_tcmd /sys/devices/platform/soc/a600000.ssusb/modusb_enable
+   chown root vendor_tcmd /sys/devices/platform/soc/a600000.ssusb/modusb_protocol
 
-   # Change ownership and permission for Bq2597x-standalone factory testing
-   chown system system /sys/class/power_supply/bq2597x-standalone/voltage_now
-   chown system system /sys/class/power_supply/bq2597x-standalone/charging_enabled
-   chmod 0644 /sys/class/power_supply/bq2597x-standalone/voltage_now
-   chmod 0664 /sys/class/power_supply/bq2597x-standalone/charging_enabled
-
+   # Change ownership for capsensor
+   chown root input /sys/class/sensors/Moto\ CapSense\ Ch0/enable
+   chown root input /sys/class/sensors/Moto\ CapSense\ Ch0/poll_delay
+   chown root input /sys/class/sensors/Moto\ CapSense\ Ch1/enable
+   chown root input /sys/class/sensors/Moto\ CapSense\ Ch1/poll_delay
+   chown root input /sys/class/sensors/Moto\ CapSense\ Ch2/enable
+   chown root input /sys/class/sensors/Moto\ CapSense\ Ch2/poll_delay
+   chown root input /sys/class/sensors/Moto\ CapSense\ Ch3/enable
+   chown root input /sys/class/sensors/Moto\ CapSense\ Ch3/poll_delay
+   chown root input /sys/class/sensors/Moto\ CapSense\ Ch4/enable
+   chown root input /sys/class/sensors/Moto\ CapSense\ Ch4/poll_delay
+   chown system system /sys/class/capsense/reset
+   chown system system /sys/class/capsense/int_state
 
    # change permission for adaptive charging
    chown system system /sys/module/qpnp_adaptive_charge/parameters/upper_limit
@@ -97,6 +85,13 @@ service vendor.mmi-autotest-sh /vendor/bin/init.mmi.autotest.sh
    user root
    oneshot
    disabled
+
+service vendor.qrtr-lookup-sh /vendor/bin/init.mmi.qrtr-lookup.sh
+    class late_start
+    user root
+    group log system
+    oneshot
+    disabled
 
 on property:persist.vendor.autotest.loop=1
     start vendor.mmi-autotest-sh
@@ -124,3 +119,7 @@ on property:ro.bootmode=normal
     write /sys/module/usb3813_hub/parameters/boost_val 5
 on property:ro.bootmode=mot-factory
     write /sys/module/usb3813_hub/parameters/boost_val 5
+
+# restart sensorHAL when framework died
+on property:init.svc.zygote=restarting
+    restart vendor.sensors-hal-2-0-multihal
