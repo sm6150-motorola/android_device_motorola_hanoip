@@ -27,9 +27,5 @@ DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 # Kernel
 TARGET_KERNEL_CONFIG := vendor/hanoip_defconfig
 
-# Kernel modules - Audio
-TARGET_MODULE_ALIASES += \
-    snd-soc-aw882xx.ko:snd_smartpa_aw882xx.ko
-
 # SELinux
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
