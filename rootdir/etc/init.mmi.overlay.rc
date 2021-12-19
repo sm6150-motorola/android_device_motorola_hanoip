@@ -25,9 +25,9 @@ on boot
    chown system system /sys/class/capsense/int_state
 
    # Change the ownership of display TE files for tcmds
-   chown root vendor_tcmd /sys/class/graphics/fb0/te_test
-   chown root vendor_tcmd /sys/class/graphics/fb0/te_enable
-   chown root vendor_tcmd /sys/class/graphics/fb0/frame_counter
+   chown root oem_5004 /sys/class/graphics/fb0/te_test
+   chown root oem_5004 /sys/class/graphics/fb0/te_enable
+   chown root oem_5004 /sys/class/graphics/fb0/frame_counter
    mkdir /data/vendor/gf_data 0770 system system
 
 
@@ -58,8 +58,8 @@ on boot
 
 
    # Change ownership and permission for AMPS factory testing
-   chown root vendor_tcmd /sys/devices/platform/soc/a600000.ssusb/modusb_enable
-   chown root vendor_tcmd /sys/devices/platform/soc/a600000.ssusb/modusb_protocol
+   chown root oem_5004 /sys/devices/platform/soc/a600000.ssusb/modusb_enable
+   chown root oem_5004 /sys/devices/platform/soc/a600000.ssusb/modusb_protocol
 
    # Change ownership for capsensor
    chown root input /sys/class/sensors/Moto\ CapSense\ Ch0/enable
