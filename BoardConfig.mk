@@ -30,6 +30,17 @@ DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 # Kernel
 TARGET_KERNEL_CONFIG := vendor/hanoip_defconfig
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+BOARD_BOOTIMG_HEADER_VERSION := 3
+
+# Partitions
+BOARD_BOOT_HEADER_VERSION := 3
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
+TARGET_COPY_OUT_PRODUCT := product
+TARGET_COPY_OUT_SYSTEM_EXT := system_ext
+# A/B
+AB_OTA_PARTITIONS += \
+		system_ext \
+		vendor_boot
 
 # Recovery
 BOARD_USES_RECOVERY_AS_BOOT := true
